@@ -30,12 +30,21 @@ jobs:
 
       - run: yarn build
 
-      - name: Upload dist to Hostinger
-        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
-          local-dir: ./dist/
-          server-dir: public_html/
+      - name: Install Hostinger CLI
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HOSTINGER_CLI_VERSION: 4.20.1
+        run: |
+          dir="$RUNNER_TEMP/hostinger"
+          gh release download "v$HOSTINGER_CLI_VERSION" --repo hostinger/api-cli --dir "$dir" \
+            --pattern "hostinger-$HOSTINGER_CLI_VERSION-linux-amd64.tar.gz" \
+            --pattern "hostinger-$HOSTINGER_CLI_VERSION-checksums.sha256"
+          cd "$dir"
+          sha256sum --check --ignore-missing "hostinger-$HOSTINGER_CLI_VERSION-checksums.sha256"
+          tar -xzf "hostinger-$HOSTINGER_CLI_VERSION-linux-amd64.tar.gz" hostinger
+          echo "$dir" >> "$GITHUB_PATH"
+
+      - name: Deploy dist to Hostinger
+        env:
+          HOSTINGER_API_TOKEN: ${{ secrets.HOSTINGER_API_TOKEN }}
+        run: hostinger up ./dist --domain sginfra.shop --type static --source upload --yes --format json
