@@ -1,0 +1,27 @@
+# Search engines may index this site. AI training, AI answers and AI agents may not.
+User-agent: *
+Content-Signal: search=yes, ai-train=no, ai-input=no
+Allow: /
+
+# AI training crawlers
+User-agent: GPTBot
+User-agent: ClaudeBot
+User-agent: anthropic-ai
+User-agent: CCBot
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: meta-externalagent
+User-agent: Bytespider
+User-agent: Amazonbot
+User-agent: cohere-training-data-crawler
+User-agent: Diffbot
+# AI search and answer engines
+User-agent: OAI-SearchBot
+User-agent: Claude-SearchBot
+User-agent: PerplexityBot
+# AI agents fetching pages on a user's behalf
+User-agent: ChatGPT-User
+User-agent: Claude-User
+User-agent: Perplexity-User
+User-agent: MistralAI-User
+Disallow: /
