@@ -1,13 +1,15 @@
+import { Link } from 'react-router'
+
 const Home = () => {
     return (
         <>
             <h1>Hello, World!</h1>
             <ul>
                 <li>
-                    <a href="/about">About</a>
+                    <Link to="/about">About</Link>
                 </li>
                 <li>
-                    <a href="/terms">Terms</a>
+                    <Link to="/terms">Terms</Link>
                 </li>
             </ul>
         </>
