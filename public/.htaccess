@@ -1,4 +1,5 @@
 ErrorDocument 404 /404.html
+RedirectMatch 404 ^/_headers$
 
 <IfModule mod_headers.c>
   Header always set Strict-Transport-Security "max-age=15552000"
